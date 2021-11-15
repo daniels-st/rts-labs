@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>RTS Labs Test</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; font-family: Barlow,sans-serif!important; }
+        h1 {  margin-top: 0px; padding: 10px; background: #79c246; color: white; }
+        h2, p, div { padding: 5px 0px 0px 10px; }
+        .result { display: inline-block; margin-left: 5px; padding: 2px 3px; width: 170px; border: 1px solid #333; border-radius: 2px; font-size: .8em; }
+        label { font-weight: bold; display: inline-block; width: 200px; text-align: right; }
+        button { display: inline-block; width: 100px; margin-left: 95px; }
+    </style>
+
+<script>
+    function aboveBelow(arr, int) {
+        var above = 0;
+        var below = 0;
+
+        for(var i = 0; i < arr.length; i++) {
+           if (arr[i] > int) { above++; }
+           else if (arr[i] < int) { below++; } 
+        }
+        return {"above": above, "below": below};
+    }
+    
+    function runAboveBelow() {
+        var test1Array = JSON.parse(document.getElementById("test1Array").value);
+        var test1Integer = document.getElementById("test1Integer").value;
+        var abResult = document.getElementById("test1Result");
+        abResult.innerHTML = JSON.stringify(aboveBelow(test1Array, test1Integer));
+    };
+    
+    function rotateString(str, int) {     
+        //if the length of the string is less than the int, ensure we loop - so let's use a modulus
+        var rotationAmount = (str.length < int) ? (int % str.length) : int;
+
+        //next we use the modulus result to cut the correct amount off the beginning and add that piece to the end
+        var newStr = str.slice(-1 * rotationAmount) + str.slice(0, str.length - rotationAmount);
+        return newStr;
+    }
+ 
+    function runRotateString() { 
+        var test2String = document.getElementById("test2String").value;
+        var test2Integer = document.getElementById("test2Integer").value;
+        var rotateResult = document.getElementById("test2Result");
+        rotateResult.innerHTML = JSON.stringify(rotateString(test2String, test2Integer));
+    }
+    function init() {
+        //add button listeners for run buttons
+        //TO DO: ideally we should setup validation for values added in inputs
+        document.getElementById("runTest1").addEventListener("click", runAboveBelow);
+        document.getElementById("runTest2").addEventListener("click", runRotateString);
+    }
+    </script>
+</head>
+<body onload="init();">
+<h1>RTS Labs Test</h1>
+
+<h2>Test 1: Above/Below</h2>
+<p><label>Enter an array of integers:</label> <input id="test1Array" value="[1,2,3,4,5,6]" /></p>
+<p><label>Enter an integer:</label> <input id="test1Integer" value="3" /></p>
+<p><button id="runTest1">Run</button>
+<span class="result" id="test1Result">
+    <em>Click "Run" for result</em>
+</span>
+</p>
+
+<h2>Test 2: String Rotation</h2>
+<p><label>Enter a string:</label> <input id="test2String" value="MyString" /></p>
+
+<p><label>Enter an integer:</label> <input id="test2Integer" value="2" /></p>
+<p><button id="runTest2">Run</button>
+<span class="result" id="test2Result">
+    <em>Click "Run" for result</em>
+</span>
+</p>
+
+</body>
+</html>
